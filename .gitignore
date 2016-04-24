@@ -1,0 +1,5 @@
+.meteor/local
+.meteor/meteorite
+t
+*.kate-swp
+mongo.sh
