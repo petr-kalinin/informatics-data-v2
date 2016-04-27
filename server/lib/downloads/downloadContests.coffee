@@ -20,7 +20,7 @@ class ContestDownloader
             Problems.addProblem(prob._id, prob.letter, prob.name)
             problemIds.push(prob._id)
         @order++
-        Tables.addTable(cid, name, [], problemIds, level, @order)
+        Tables.addTable(cid, name, [], problemIds, level, @order*100)
         
     processContest: (fullText, href, cid, name, level) ->
         text = syncDownload(href).content
