@@ -12,10 +12,10 @@ Submits =
         @collection.findOne _id: id
         
     findAcByUserAndProblem: (user, problem) ->
-        @collection.find({user: user, problem: problem._id, outcome: "AC"})
+        @collection.find({user: user, problem: problem, outcome: "AC"})
 
     findByUserAndProblem: (user, problem) ->
-        @collection.find({user: user, problem: problem._id}, {sort: {time: 1}})
+        @collection.find({user: user, problem: problem}, {sort: {time: 1}})
         
     findByUser: (user) ->
         @collection.find({user: user}, {sort: {time: 1}})

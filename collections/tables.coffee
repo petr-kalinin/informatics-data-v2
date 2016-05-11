@@ -13,17 +13,17 @@ TablesCollection.helpers
         Tables.collection.update({ _id: @_id }, {$push: { tables: id }})
         
 parentFromParent = (level) ->
-    if level == "main"
+    if level == Tables.main
         return undefined
     p = parseLevel(level)
     if p.minor
         return p.major
     else 
-        return "main"
-    
-        
+        return Tables.main
         
 Tables =
+    main: "main"
+
     findById: (id) ->
         @collection.findOne _id: id
         

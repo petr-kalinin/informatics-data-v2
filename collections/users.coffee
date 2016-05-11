@@ -17,18 +17,19 @@ UsersCollection = new Mongo.Collection 'tableUsers'
 @SEMESTER_START = "2016-01-01"
 
 UsersCollection.helpers
-#    updateChocos: ->
-#        results = calculateChocos this
-#        Users.collection.update({_id: @_id}, {$set: {chocos: res}})
+    updateChocos: ->
+        @chocos = calculateChocos @_id
+        console.log @name, res
+        Users.collection.update({_id: @_id}, {$set: {chocos: @chocos}})
         
 #    updateRatingEtc: ->
 #        res = calculateRatingEtc this
 #        Users.collection.update({_id: @_id}, {$set: res})
         
-#    updateLevel: ->
-#        level = calculateLevel this, new Date("2100-01-01")
-#        startLevel = calculateLevel this, new Date(SEMESTER_START)
-#        Users.collection.update({_id: @_id}, {$set: {level: level, startLevel : startLevel}})
+    updateLevel: ->
+        @level = calculateLevel @_id, new Date("2100-01-01")
+        @startLevel = calculateLevel @_id, new Date(SEMESTER_START)
+        Users.collection.update({_id: @_id}, {$set: {level: @level, startLevel : @startLevel}})
 
 #    setBaseLevel: (level) ->
 #        Users.collection.update({_id: @_id}, {$set: {baseLevel: level}})
