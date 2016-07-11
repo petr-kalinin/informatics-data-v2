@@ -22,9 +22,10 @@ UsersCollection.helpers
         console.log @name, res
         Users.collection.update({_id: @_id}, {$set: {chocos: @chocos}})
         
-#    updateRatingEtc: ->
-#        res = calculateRatingEtc this
-#        Users.collection.update({_id: @_id}, {$set: res})
+    updateRatingEtc: ->
+        res = calculateRatingEtc this
+        console.log @name, res
+        Users.collection.update({_id: @_id}, {$set: res})
         
     updateLevel: ->
         @level = calculateLevel @_id, new Date("2100-01-01")

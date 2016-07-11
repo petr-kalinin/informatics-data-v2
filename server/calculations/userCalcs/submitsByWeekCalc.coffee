@@ -1,16 +1,6 @@
-problemLevelCache = {}
-
-findProblemLevel = (problem) ->
-    if problemLevelCache[problem]
-        return problemLevelCache[problem]
-    contests = Contests.findAll().fetch()
-    resLevel = ""
-    for c in contests
-        for p in c.problems
-            if (p._id == problem) and (c.level > resLevel)
-                resLevel = c.level
-    problemLevelCache[problem] = resLevel
-    return resLevel
+@WEEK_ACTIVITY_EXP = 0.55
+@LEVEL_RATING_EXP = 2.5
+@ACTIVITY_THRESHOLD = 0.1
 
 levelVersion = (level) ->
     if (level.slice(0,3) == "reg")
@@ -36,6 +26,11 @@ levelScore = (level) ->
         res *= minorExp
     return res
 
+findProblemLevel = (problemId) ->
+    problem = Problems.findById(problemId)
+    problem?.level
+        
+
 timeScore = (date) ->
     weeks = (new Date() - date)/MSEC_IN_WEEK
     #console.log weeks
@@ -58,7 +53,7 @@ activityScore = (level, date) ->
         if probSolved[s.problem]
             continue
         level = findProblemLevel(s.problem)
-        if (level == "")
+        if not level
             continue
         submitDate = new Date(s.time)
         week = Math.floor((submitDate - thisStart) / MSEC_IN_WEEK)
@@ -68,9 +63,9 @@ activityScore = (level, date) ->
             if !weekSolved[week]
                 weekSolved[week] = 0
             weekSolved[week]++
-            #console.log submitDate, s.problem, level
-            #console.log levelScore(level), timeScore(submitDate), activityScore(level, submitDate)
-            #console.log "=", rating, activity
+            console.log submitDate, s.problem, level
+            console.log level, levelScore(level), timeScore(submitDate), activityScore(level, submitDate)
+            console.log "=", rating, activity
             rating += levelScore(level)
             activity += activityScore(level, submitDate)
         else if s.outcome == "OK"
@@ -96,5 +91,5 @@ activityScore = (level, date) ->
         active: if activity > ACTIVITY_THRESHOLD then 1 else 0
     }
     
-#Meteor.startup ->
-#    Users.findById("82325").updateRatingEtc()
+Meteor.startup ->
+    Users.findById("60375").updateRatingEtc()

@@ -35,6 +35,7 @@ Tables =
                            {_id: id, name: name, tables: tables, problems: problems, parent: parent, order: order}, 
                            {upsert: true})
         for prob in problems
+            console.log prob, id
             Problems.findById(prob).addTable(id)
         if parent
             if not @findById(parent)

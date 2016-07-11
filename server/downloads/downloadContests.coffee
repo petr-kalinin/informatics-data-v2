@@ -79,5 +79,5 @@ class RegionContestDownloader extends ContestDownloader
 
 
 Meteor.startup ->
-#    (new RegionContestDownloader()).run()
-#    (new ContestDownloader()).run()
+    #(new RegionContestDownloader()).run()
+    #(new ContestDownloader()).run()
