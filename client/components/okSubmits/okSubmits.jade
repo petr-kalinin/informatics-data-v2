@@ -1,0 +1,18 @@
+template(name='okSubmits')
+    table.okSubmits
+        +each submits
+            if needSubmit
+                tr
+                    td
+                        a(href="{{href}}",target="_blank")
+                            =time
+                    td
+                        =user
+                    td
+                        =problem
+                    td
+                        =contests
+        
+                
+                    
+    
