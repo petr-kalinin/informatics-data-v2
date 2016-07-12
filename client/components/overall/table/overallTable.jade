@@ -5,9 +5,14 @@ template(name='overallTable')
         tr
             +userHeader name=true
             td.border
+            td
+                | =
+            td.border
             +overallHeader mainTable
         +each users
             tr
                 +userLine
+                td.border
+                +overallResult table=mainTable user=this
                 td.border
                 +overallLine user=this table=mainTable
