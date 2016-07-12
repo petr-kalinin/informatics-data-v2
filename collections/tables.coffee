@@ -12,6 +12,12 @@ TablesCollection.helpers
     addTable: (id) ->
         Tables.collection.update({ _id: @_id }, {$push: { tables: id }})
         
+    height: ->
+        if @tables.length > 0
+            return Tables.findById(@tables[0]).height() + 1
+        else
+            return 1
+        
 parentFromParent = (level) ->
     if level == Tables.main
         return undefined

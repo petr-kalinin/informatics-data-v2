@@ -42,8 +42,7 @@ Results =
 
     findByUserAndTable: (userId, tableId) ->
         @collection.findOne {
-            user: userId, 
-            table: tableId
+            _id: userId + "::" + tableId
         }
         
     collection: ResultsCollection

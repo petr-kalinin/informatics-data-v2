@@ -91,5 +91,7 @@ activityScore = (level, date) ->
         active: if activity > ACTIVITY_THRESHOLD then 1 else 0
     }
     
-Meteor.startup ->
-    Users.findById("60375").updateRatingEtc()
+#Meteor.startup ->
+#    for u in Users.findAll().fetch()
+#        u.updateRatingEtc()
+#        console.log u.name, u.rating, u.activity

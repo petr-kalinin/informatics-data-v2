@@ -1,0 +1,13 @@
+template(name='overallTable')
+    h1
+        | Общая таблица
+    table.mainTable
+        tr
+            +userHeader name=true
+            td.border
+            +overallHeader mainTable
+        +each users
+            tr
+                +userLine
+                td.border
+                +overallLine user=this table=mainTable

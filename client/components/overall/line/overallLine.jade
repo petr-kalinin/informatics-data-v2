@@ -1,0 +1,13 @@
+template(name='overallLine')
+    if needRecurse
+        +each table.tables
+            +overallLine table=subTable user=../user
+        if needBorder
+            td.border
+    else
+        +overallResult
+                
+                    
+template(name='overallResult')
+    td(style="background-color: {{bgColor}};")
+        =result
