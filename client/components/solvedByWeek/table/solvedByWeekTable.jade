@@ -1,0 +1,7 @@
+template(name='solvedByWeekTable')
+    h1
+        | Сданные задачи по неделям
+    table.mainTable
+        +solvedByWeekHeader userList=this name=true
+        +each users
+            +solvedByWeekLine userList=.. name=true user=this

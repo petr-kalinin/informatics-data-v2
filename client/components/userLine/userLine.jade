@@ -1,8 +1,7 @@
 template(name='userLine')
     if name
         td
-            a(href="/user/{{_id}}")
-                +userName
+            +userName
         if admin
             td
                 span(title="Базовый уровень")

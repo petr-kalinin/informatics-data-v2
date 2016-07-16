@@ -1,0 +1,13 @@
+template(name='solvedByWeekHeader')
+    tr
+        if name
+            +userHeader
+        +each weekSet 
+            +oneWeekHeader weekNumber=this userList=../userList
+
+template(name='oneWeekHeader')
+    td
+        =weekHeader
+                
+                    
+    
