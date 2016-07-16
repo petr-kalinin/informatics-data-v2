@@ -30,6 +30,7 @@ TablesCollection.helpers
             expandedProblem = Problems.findById(problem)
             expandedProblems.push(expandedProblem)
         @problems = expandedProblems
+        return this
         
     descendandTables: ->
         result = [@_id]

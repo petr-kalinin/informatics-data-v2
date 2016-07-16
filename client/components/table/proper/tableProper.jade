@@ -1,0 +1,16 @@
+template(name='tableProper')
+    table.mainTable
+        tr
+            td.topLeft
+                | &nbsp;
+            +tableHeader1
+        //tr
+            //td
+                //| &nbsp;
+            //+tableHeader2
+        +each users
+            tr
+                td
+                    +userName
+                +tableRow user=this tables=../tables
+

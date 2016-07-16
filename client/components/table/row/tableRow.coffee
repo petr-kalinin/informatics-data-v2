@@ -10,7 +10,7 @@ Template.result.helpers
         else if result.attempts > 0
             "-" + result.attempts
         else
-            ""
+            " "
             
     class: ->
         result = Results.findByUserAndTable(@user._id, @table._id)
@@ -59,4 +59,16 @@ Template.tableRow.events
         url = "http://informatics.mccme.ru/moodle/user/view.php?id=" + t.data.result.user
         window.open(url, '_blank')
 
-
+Template.result.events
+    'dblclick .res': (e,t) ->
+        problem = @table._id.substr(1)
+        result = Results.findByUserAndTable(@user._id, @table._id)
+        runId = result.lastSubmitId
+        runSuff = ''
+        if runId
+            runSuff = '&run_id=' + runId
+        if e.ctrlKey
+            url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid=' + problem + '&submit&user_id=' + @user._id
+        else
+            url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid=' + problem + runSuff
+        window.open(url, '_blank')
