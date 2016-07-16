@@ -30,9 +30,15 @@ Results =
         @collection.find {}
     
     findByUserListAndTable: (userList, table) ->
+        tableList = Tables.findById(table).descendandTables()
         @collection.find {
             userList: userList, 
-            table: table
+            table: {$in: tableList}
+        }, sort: { solved: -1, attempts: 1}
+            
+    findByUserList: (userList) ->
+        @collection.find {
+            userList: userList
         }, sort: { solved: -1, attempts: 1}
             
     findByUser: (userId) ->
@@ -54,6 +60,11 @@ if Meteor.isServer
         Results.collection._ensureIndex
             userList: 1
             table : 1 
+            solved: -1
+            attempts: 1
+
+        Results.collection._ensureIndex
+            userList: 1
             solved: -1
             attempts: 1
 

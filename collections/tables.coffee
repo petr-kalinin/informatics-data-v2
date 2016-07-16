@@ -18,6 +18,27 @@ TablesCollection.helpers
         else
             return 1
         
+    expand: ->
+        expandedTables = []
+        for table in @tables
+            subTable = Tables.findById(table)
+            subTable.expand()
+            expandedTables.push(subTable)
+        @tables = expandedTables
+        expandedProblems = []
+        for problem in @problems
+            expandedProblem = Problems.findById(problem)
+            expandedProblems.push(expandedProblem)
+        @problems = expandedProblems
+        
+    descendandTables: ->
+        result = [@_id]
+        for table in @table
+            subTable = Tables.findById(table)
+            result = result.concat(subTable.descendandTables())
+        for problem in @problems
+            result.push(problem)
+        
 parentFromParent = (level) ->
     if level == Tables.main
         return undefined

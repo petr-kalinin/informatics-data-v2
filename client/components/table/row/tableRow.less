@@ -1,0 +1,46 @@
+@ac: #44ff44;
+@ok: #ffff00;
+@wa: #ff4444;
+@ig: #aaaaff;
+
+.ac {
+    background: @ac;
+}
+.ac.inactive {
+    background: rgb(luma(@ac), luma(@ac), luma(@ac));
+}
+.ok {
+    background: @ok;
+}
+.ok.inactive {
+    background: rgb(luma(@ok), luma(@ok), luma(@ok));
+}
+.wa {
+    background: @wa;
+}
+.wa.inactive {
+    background: rgb(luma(@wa), luma(@wa), luma(@wa));
+}
+.ig {
+    background: @ig;
+}
+.ig.inactive {
+    background: rgb(luma(@ig), luma(@ig), luma(@ig));
+}
+
+td.res {
+    font-family: monospace;
+    text-align: center;
+}
+.dq {
+    background: black;
+}
+
+.active, .mainTable td.active {
+    border-top:3px solid black;
+    border-bottom:3px solid black;
+}
+
+td.active {
+    font-weight: bold;
+}

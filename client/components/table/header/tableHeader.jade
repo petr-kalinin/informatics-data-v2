@@ -1,0 +1,30 @@
+template(name='tableHeader1')
+    +each tables
+        +each tables
+            td.border
+            td(colspan="{{colspan}}")
+                =name
+        td.border
+        td
+            | =
+    td.border
+    td
+        | =
+    td
+        | Попыток
+    
+template(name='tableHeader2')
+    +each tables
+        td.border
+        +each tables
+            +each problems
+                td(title="{{name}}")
+                    &nbsp;
+        td.border
+        td
+            | =
+    td.border
+    td
+        | =
+    td
+        | Попыток

@@ -9,6 +9,10 @@ UsersCollection = new Mongo.Collection 'tableUsers'
 #   startlevel
 #   active
 #   ratingSort
+#   solvedByWeek
+#   okByWeek
+#   rating
+#   activity
 
 @startDayForWeeks = 
     "lic40": "2015-08-26"
