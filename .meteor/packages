@@ -32,3 +32,4 @@ meteorhacks:fast-render
 accounts-ui
 accounts-password
 mrt:accounts-vk
+meteorhacks:ssr
