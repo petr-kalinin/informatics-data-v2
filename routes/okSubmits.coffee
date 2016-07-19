@@ -1,4 +1,4 @@
-Router.route '/okSubmits', name: 'okSubmits'
+Router.route '/okSubmits', {name: 'okSubmits', where: 'server'}
 class @OkSubmitsController extends ControllerWithTitle
     waitOn: ->
         Meteor.subscribe 'okSubmits'

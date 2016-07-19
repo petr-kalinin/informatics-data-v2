@@ -1,4 +1,4 @@
-Router.route '/table/:userList/:tableIds', name: 'table'
+Router.route '/table/:userList/:tableIds', {name: 'table', where: 'server'}
 class @TableController extends ControllerWithTitle
     waitOn: ->
         tableIds = this.params.tableIds.split(",")
@@ -21,7 +21,7 @@ class @TableController extends ControllerWithTitle
         return {tables: tables, users: users}
     
     name: ->
-        'users'
+        'table'
         
     title: ->
         'Сводная таблица'

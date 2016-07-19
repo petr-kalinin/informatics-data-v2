@@ -1,4 +1,4 @@
-Router.route '/overallTable/:userList', name: 'overallTable'
+Router.route '/overallTable/:userList', {name: 'overallTable', where: 'server'}
 class @OverallTableController extends ControllerWithTitle
     waitOn: ->
         userList = this.params.userList

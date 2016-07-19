@@ -1,4 +1,4 @@
-Router.route '/user/:id', name: 'user'
+Router.route '/user/:id', {name: 'user', where: 'server'}
 class @UserController extends ControllerWithTitle
     waitOn: ->
         id = this.params.id
@@ -13,7 +13,7 @@ class @UserController extends ControllerWithTitle
         Users.findById id
     
     name: ->
-        'users'
+        'user'
         
     title: ->
         id = this.params.id

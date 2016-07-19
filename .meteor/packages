@@ -21,6 +21,7 @@ spacebars
 check
 coffeescript
 mquandalle:jade
+mquandalle:jade-compiler
 iron:router
 nemo64:bootstrap
 momentjs:moment

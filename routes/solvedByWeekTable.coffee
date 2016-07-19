@@ -1,4 +1,4 @@
-Router.route '/solvedByWeekTable/:userList', name: 'solvedByWeekTable'
+Router.route '/solvedByWeekTable/:userList', {name: 'solvedByWeekTable', where: 'server'}
 class @SolvedByWeekTableController extends ControllerWithTitle
     waitOn: ->
         userList = this.params.userList
@@ -10,7 +10,7 @@ class @SolvedByWeekTableController extends ControllerWithTitle
         return userList
     
     name: ->
-        'users'
+        'solvedByWeekTable'
         
     title: ->
         'Посылки по неделям'
