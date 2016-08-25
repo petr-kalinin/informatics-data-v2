@@ -1,5 +1,7 @@
 Router.route '/okSubmits', {name: 'okSubmits', where: 'server'}
 class @OkSubmitsController extends ControllerWithTitle
+    server: true
+ 
     waitOn: ->
         Meteor.subscribe 'okSubmits'
         Meteor.subscribe 'users'
@@ -15,3 +17,11 @@ class @OkSubmitsController extends ControllerWithTitle
         
     title: ->
         'OK-посылки'
+
+Router.route '/okSubmits/c', name: 'okSubmitsC'
+class @OkSubmitsCController extends OkSubmitsController
+    server: false
+        
+    template: 'okSubmits'
+        
+    fastRender: false

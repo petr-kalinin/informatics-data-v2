@@ -1,5 +1,7 @@
 Router.route '/table/:userList/:tableIds', {name: 'table', where: 'server'}
 class @TableController extends ControllerWithTitle
+    server: true
+
     waitOn: ->
         tableIds = this.params.tableIds.split(",")
         userList = this.params.userList
@@ -10,6 +12,9 @@ class @TableController extends ControllerWithTitle
         Meteor.subscribe 'meteorUser'
         
     data: ->
+        #params = this.request.url.split("/")
+        #tableIds = params[3]
+        #userList = params[2]
         tableIds = this.params.tableIds.split(",")
         userList = this.params.userList
         tables = (Tables.findById(id) for id in tableIds)
@@ -25,3 +30,9 @@ class @TableController extends ControllerWithTitle
         
     title: ->
         'Сводная таблица'
+
+Router.route '/table/:userList/:tableIds/c', {name: 'tableC'}
+class @TableCController extends TableController
+    server: false
+    template: 'table'
+    fastRender: false

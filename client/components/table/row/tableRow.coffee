@@ -20,7 +20,7 @@ Template.result.helpers
             "ig"
         else if result.ok > 0
             "ok"
-        else if result.ignored == Submits.DQconst
+        else if result.ignored == Results.DQconst
             "dq"
         else if result.attempts > 0
             "wa"

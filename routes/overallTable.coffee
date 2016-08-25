@@ -1,5 +1,7 @@
 Router.route '/overallTable/:userList', {name: 'overallTable', where: 'server'}
 class @OverallTableController extends ControllerWithTitle
+    server: true
+
     waitOn: ->
         userList = this.params.userList
         Meteor.subscribe 'users'

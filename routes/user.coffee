@@ -1,5 +1,7 @@
 Router.route '/user/:id', {name: 'user', where: 'server'}
 class @UserController extends ControllerWithTitle
+    server: true
+
     waitOn: ->
         id = this.params.id
         Meteor.subscribe 'users'
