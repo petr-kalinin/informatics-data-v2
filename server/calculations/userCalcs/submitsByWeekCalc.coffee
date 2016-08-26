@@ -63,9 +63,6 @@ activityScore = (level, date) ->
             if !weekSolved[week]
                 weekSolved[week] = 0
             weekSolved[week]++
-            console.log submitDate, s.problem, level
-            console.log level, levelScore(level), timeScore(submitDate), activityScore(level, submitDate)
-            console.log "=", rating, activity
             rating += levelScore(level)
             activity += activityScore(level, submitDate)
         else if s.outcome == "OK"

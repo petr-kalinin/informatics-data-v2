@@ -2,6 +2,14 @@ template(name='user')
     h1
         +userName
     blockquote
+        if admin
+            div
+                | Базовый уровень
+                form.baseLevel
+                        input(type="text",name="newLevel",value="{{baseLevel}}",size="3")
+            div
+                | Уровень на начало полугодия:
+                =startLevel
         div
             | Уровень:
             =level

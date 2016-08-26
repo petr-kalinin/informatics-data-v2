@@ -20,3 +20,11 @@ class @UserController extends ControllerWithTitle
     title: ->
         id = this.params.id
         Users.findById(id).name
+
+Router.route '/user/:id/c', name: 'userC'
+class @UserCController extends UserController
+    server: false
+        
+    template: 'user'
+        
+    fastRender: false

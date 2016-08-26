@@ -1,4 +1,4 @@
-@calculateLevel = (user, lastDate) ->
+@calculateLevel = (user, baseLevel, lastDate) ->
     for bigLevel in [1..10]
         for smallLevel in ["А", "Б", "В", "Г"]
             tableId = bigLevel + smallLevel
@@ -29,7 +29,7 @@
                 needProblem = probNumber * 0.5
             else if smallLevel == "Г"
                 needProblem = probNumber * 0.3333
-            if (probAc < needProblem) and ((!user.baseLevel) or (user.baseLevel < level))
+            if (probAc < needProblem) and ((!baseLevel) or (baseLevel <= level))
                 console.log user, level
                 return level
     return "inf"

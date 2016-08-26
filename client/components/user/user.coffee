@@ -21,4 +21,13 @@ Template.user.helpers
     lic40: ->
         @userList == "lic40"
         
+    admin: ->
+        isAdmin()
         
+        
+Template.user.events    
+    "submit .baseLevel": (event) ->
+        Meteor.call("setBaseLevel", @_id, event.target.newLevel.value)
+        event.preventDefault()
+        false
+

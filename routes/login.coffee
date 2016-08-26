@@ -1,1 +1,1 @@
-Router.route '/login', name: 'loginButtons'
+Router.route '/login/c', name: 'loginButtons'

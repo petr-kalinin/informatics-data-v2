@@ -7,6 +7,7 @@ UsersCollection = new Mongo.Collection 'tableUsers'
 #   chocos
 #   level
 #   startlevel
+#   baselevel
 #   active
 #   ratingSort
 #   solvedByWeek
@@ -32,15 +33,16 @@ UsersCollection.helpers
         Users.collection.update({_id: @_id}, {$set: res})
         
     updateLevel: ->
-        @level = calculateLevel @_id, new Date("2100-01-01")
-        @startLevel = calculateLevel @_id, new Date(SEMESTER_START)
+        @level = calculateLevel @_id, @baseLevel, Date("2100-01-01")
+        @startLevel = calculateLevel @_id, @baseLevel, Date(SEMESTER_START)
         Users.collection.update({_id: @_id}, {$set: {level: @level, startLevel : @startLevel}})
 
-#    setBaseLevel: (level) ->
-#        Users.collection.update({_id: @_id}, {$set: {baseLevel: level}})
-#        if Meteor.isServer
-#            @updateLevel()
-#            @updateRatingEtc()
+    setBaseLevel: (level) ->
+        Users.collection.update({_id: @_id}, {$set: {baseLevel: level}})
+        @baseLevel = level
+        if Meteor.isServer
+            @updateLevel()
+            @updateRatingEtc()
 
 Users =
     findById: (id) ->
