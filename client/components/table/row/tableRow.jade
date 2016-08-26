@@ -11,7 +11,7 @@ template(name='tableRow')
     +attempts
 
 template(name='result')
-    td(title="{{user.name}} : {{table.name}}",class="{{class}} res")
+    td(title="{{user.name}} : {{table.name}}",class="{{class}} res", ondblclick="if (event.ctrlKey) window.open('{{ctrlDbClickUrl}}', '_blank'); else window.open('{{dbClickUrl}}', '_blank');")
         =text
 
 template(name='totalResult')

@@ -27,6 +27,23 @@ Template.result.helpers
         else
             undefined
             
+    dbClickUrl: ->
+        problem = @table._id.substr(1)
+        result = Results.findByUserAndTable(@user._id, @table._id)
+        runId = result.lastSubmitId
+        runSuff = ''
+        if runId
+            runSuff = '&run_id=' + runId
+        url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid=' + problem + runSuff
+
+    ctrlDbClickUrl: ->
+        problem = @table._id.substr(1)
+        result = Results.findByUserAndTable(@user._id, @table._id)
+        runId = result.lastSubmitId
+        runSuff = ''
+        url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid=' + problem + '&submit&user_id=' + @user._id
+    
+            
 Template.totalResult.helpers
     result: ->
         solved = 0

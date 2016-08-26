@@ -10,7 +10,7 @@ template(name='tableProper')
             //+tableHeader2
         +each users
             tr
-                td
+                td(ondblclick="window.open('{{url}}','_blank')")
                     +userName
                 +tableRow user=this tables=../tables
 
