@@ -1,3 +1,10 @@
+cmp = (a, b) ->
+    if (a.solved != b.solved)
+        return b.solved - a.solved
+    if (a.attempts != b.attempts)
+        return a.attempts - b.attempts
+    return 0
+
 Router.route '/table/:userList/:tableIds', {name: 'table', where: 'server'}
 class @TableController extends ControllerWithTitle
     server: true
@@ -22,7 +29,17 @@ class @TableController extends ControllerWithTitle
             table.expand()
         if tables.length == 1
             tables = tables[0].tables
-        users = Users.findByList(userList)
+        users = Users.findByList(userList).fetch()
+        for user in users
+            solved = 0
+            attempts = 0
+            for table in tables
+                res = Results.findByUserAndTable(user._id, table._id)
+                solved += res.solved
+                attempts += res.attempts
+            user.solved = solved
+            user.attempts = attempts
+        users.sort(cmp)
         return {tables: tables, users: users}
     
     name: ->
