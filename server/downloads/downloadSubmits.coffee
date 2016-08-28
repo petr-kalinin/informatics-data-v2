@@ -99,7 +99,7 @@ runDownload = ->
         return
     Downloads.setLastDownloadTime("any", now)
     try
-        if Downloads.lastDownloadTime("All") < now - MSEC_IN_DAY
+        if (Downloads.lastDownloadTime("All") < now - MSEC_IN_DAY) and (now.getUTCHours() <= 3)
             console.log "running All"
             (new AllSubmitDownloader(lic40url, 'lic40', 1000, 1, 1e9)).run()
             (new AllSubmitDownloader(zaochUrl, 'zaoch', 1000, 1, 1e9)).run()
@@ -130,9 +130,9 @@ SyncedCron.add
    
 
 Meteor.startup ->
-#    SyncedCron.start()
+    SyncedCron.start()
 #    (new AllSubmitDownloader(lic40url, 'lic40', 1000, 1, 1e9)).run()
-    (new AllSubmitDownloader(zaochUrl, 'zaoch', 40, 1, 1e9)).run()
+    #(new AllSubmitDownloader(zaochUrl, 'zaoch', 40, 1, 1e9)).run()
 #    for u in Users.findAll().fetch()
 #        tables = Tables.findAll().fetch()
 #        for t in tables
