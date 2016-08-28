@@ -63,11 +63,12 @@ class RegionContestDownloader extends ContestDownloader
             @processContest('', @contestBaseUrl + cont[0], cont[0], 'Первый' + fullText, 'reg' + year)
             @processContest('', @contestBaseUrl + cont[1], cont[1], 'Второй' + fullText, 'reg' + year)
             levels.push('reg' + year)
-        Tables.addTable("reg", levels)
+        #id, name, tables, problems, parent, order
+        Tables.addTable("reg", "reg", levels, [], "main", 1)
         table = Tables.findById("reg")
-        users = Users.findAll().fetch()
-        for user in users
-            Results.updateResults(user, table)
+        #users = Users.findAll().fetch()
+        #for user in users
+        #    Results.updateResults(user, table)
     
 #SyncedCron.add
 #    name: 'downloadContests',

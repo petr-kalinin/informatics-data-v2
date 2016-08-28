@@ -13,7 +13,8 @@ class AllSubmitDownloader
         true
 
     processSubmit: (uid, name, pid, runid, prob, date, outcome) ->
-        #console.log uid, name, pid, runid, prob, date, outcome
+        #if uid == "230963"
+        #    console.log uid, name, pid, runid, prob, date, outcome
         res = @needContinueFromSubmit(runid)
         if (outcome == @AC) 
             outcome = "AC"
@@ -38,7 +39,7 @@ class AllSubmitDownloader
             uid = data[1]
             name = data[2]
             pid = data[3]
-            runid = data[4]
+            runid = data[4] + "p" + pid
             prob = data[5]
             date = data[6]
             outcome = data[7].trim()
@@ -62,14 +63,13 @@ class AllSubmitDownloader
             page = page + 1
             if page > @limitPages
                 break
-        #tables = Tables.findAll().fetch()
-        #for uid,tmp of @addedUsers
-            #for t in tables
-                #Results.updateResults(Users.findById(uid), t)
-        #for uid,tmp of @addedUsers
-            #Users.findById(uid).updateChocos()
-            #Users.findById(uid).updateRatingEtc()
-            #Users.findById(uid).updateLevel()
+        tables = Tables.findAll().fetch()
+        for uid,tmp of @addedUsers
+            updateResults(uid)
+            u = Users.findById(uid)
+            u.updateChocos()
+            u.updateRatingEtc()
+            u.updateLevel()
         console.log "Finish AllSubmitDownloader::run ", @userList, @limitPages
             
 class LastSubmitDownloader extends AllSubmitDownloader
@@ -84,42 +84,55 @@ class UntilIgnoredSubmitDownloader extends AllSubmitDownloader
 
     # Лицей 40
 lic40url = (page, submitsPerPage) ->
-        'http://informatics.mccme.ru/moodle/ajax/ajax.php?problem_id=0&group_id=3696&user_id=0&lang_id=-1&status_id=-1&statement_id=0&objectName=submits&count=' + submitsPerPage + '&with_comment=&page=' + page + '&action=getHTMLTable'
+        'http://informatics.mccme.ru/moodle/ajax/ajax.php?problem_id=0&group_id=5401&user_id=0&lang_id=-1&status_id=-1&statement_id=0&objectName=submits&count=' + submitsPerPage + '&with_comment=&page=' + page + '&action=getHTMLTable'
     # Заоч
 zaochUrl = (page, submitsPerPage) ->
-    'http://informatics.mccme.ru/moodle/ajax/ajax.php?problem_id=0&group_id=3644&user_id=0&lang_id=-1&status_id=-1&statement_id=0&objectName=submits&count=' + submitsPerPage + '&with_comment=&page=' + page + '&action=getHTMLTable'
-
+    'http://informatics.mccme.ru/moodle/ajax/ajax.php?problem_id=0&group_id=5402&user_id=0&lang_id=-1&status_id=-1&statement_id=0&objectName=submits&count=' + submitsPerPage + '&with_comment=&page=' + page + '&action=getHTMLTable'
     
+MSEC_IN_DAY = 24*60*60*1000
+    
+runDownload = ->
+    now = new Date()
+    console.log "Starting download"
+    if Downloads.lastDownloadTime("any") > now - 1000*60*10
+        console.log "Another download in progress, exiting"
+        return
+    Downloads.setLastDownloadTime("any", now)
+    try
+        if Downloads.lastDownloadTime("All") < now - MSEC_IN_DAY
+            console.log "running All"
+            (new AllSubmitDownloader(lic40url, 'lic40', 1000, 1, 1e9)).run()
+            (new AllSubmitDownloader(zaochUrl, 'zaoch', 1000, 1, 1e9)).run()
+            Downloads.setLastDownloadTime("All", now)
+        else if Downloads.lastDownloadTime("UntilIgnored") < now - 4.9*60*1000
+            console.log "running UntilIgnored"
+            (new UntilIgnoredSubmitDownloader(lic40url, 'lic40', 100, 2, 4)).run()
+            (new UntilIgnoredSubmitDownloader(zaochUrl, 'zaoch', 100, 2, 4)).run()
+            Downloads.setLastDownloadTime("UntilIgnored", now)
+        else if Downloads.lastDownloadTime("Last") < now - 1.9*60*1000
+            console.log "running Last"
+            (new LastSubmitDownloader(lic40url, 'lic40', 20, 1, 1)).run()
+            (new LastSubmitDownloader(zaochUrl, 'zaoch', 20, 1, 1)).run()
+            Downloads.setLastDownloadTime("Last", now)
+        else
+            console.log "not running anything"
+    finally
+        Downloads.setLastDownloadTime("any", new Date(0))
+        
 SyncedCron.add
-    name: 'loadTable-1',
+    name: 'downloadSubmits',
     schedule: (parser) ->
-#        return parser.text('every 10 seconds');
-        return parser.text('every 1 minutes');
+        return parser.text('every 2 minutes');
+#        return parser.text('every 5 minutes');
     job: -> 
-        (new LastSubmitDownloader(lic40url, 'lic40', 20, 1, 1)).run()
-        (new LastSubmitDownloader(zaochUrl, 'zaoch', 20, 1, 1)).run()
-
-SyncedCron.add
-    name: 'loadTable-2',
-    schedule: (parser) ->
-#        return parser.text('every 10 seconds');
-        return parser.text('every 5 minutes');
-    job: -> 
-        (new UntilIgnoredSubmitDownloader(lic40url, 'lic40', 100, 2, 4)).run()
-        (new UntilIgnoredSubmitDownloader(zaochUrl, 'zaoch', 100, 2, 4)).run()
-
-SyncedCron.add
-    name: 'loadTable-3',
-    schedule: (parser) ->
-#        return parser.text('every 10 seconds');
-        return parser.text('at 0:00');
-    job: -> 
-        (new AllSubmitDownloader(lic40url, 'lic40', 1000, 1, 1e9)).run()
-        (new AllSubmitDownloader(zaochUrl, 'zaoch', 1000, 1, 1e9)).run()
+        console.log("1")
+        runDownload()
+   
 
 Meteor.startup ->
+#    SyncedCron.start()
 #    (new AllSubmitDownloader(lic40url, 'lic40', 1000, 1, 1e9)).run()
-#    (new AllSubmitDownloader(zaochUrl, 'zaoch', 1000, 1, 1e9)).run()
+    (new AllSubmitDownloader(zaochUrl, 'zaoch', 40, 1, 1e9)).run()
 #    for u in Users.findAll().fetch()
 #        tables = Tables.findAll().fetch()
 #        for t in tables

@@ -30,6 +30,8 @@ Template.result.helpers
     dbClickUrl: ->
         problem = @table._id.substr(1)
         result = Results.findByUserAndTable(@user._id, @table._id)
+        if not result
+            return ""
         runId = result.lastSubmitId
         runSuff = ''
         if runId
@@ -39,6 +41,8 @@ Template.result.helpers
     ctrlDbClickUrl: ->
         problem = @table._id.substr(1)
         result = Results.findByUserAndTable(@user._id, @table._id)
+        if not result
+            return ""
         runId = result.lastSubmitId
         runSuff = ''
         url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid=' + problem + '&submit&user_id=' + @user._id

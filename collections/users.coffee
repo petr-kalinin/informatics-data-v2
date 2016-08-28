@@ -16,15 +16,15 @@ UsersCollection = new Mongo.Collection 'tableUsers'
 #   activity
 
 @startDayForWeeks = 
-    "lic40": "2015-08-26"
-    "zaoch": "2015-08-30"
+    "lic40": "2016-08-31"
+    "zaoch": "2016-08-21"
 @MSEC_IN_WEEK = 7 * 24 * 60 * 60 * 1000
-@SEMESTER_START = "2016-01-01"
+@SEMESTER_START = "2016-06-01"
 
 UsersCollection.helpers
     updateChocos: ->
         @chocos = calculateChocos @_id
-        console.log @name, res
+        console.log @name, @chocos
         Users.collection.update({_id: @_id}, {$set: {chocos: @chocos}})
         
     updateRatingEtc: ->

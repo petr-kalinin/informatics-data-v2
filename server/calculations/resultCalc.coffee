@@ -23,7 +23,7 @@ updateResultsForTable = (userId, tableId) ->
         res = updateResultsForProblem(userId, prob)
         processRes(res)
         
-    console.log "updated result ", userId, tableId, total, solved, ok, attempts, lastSubmitTime
+    #console.log "updated result ", userId, tableId, total, solved, ok, attempts, lastSubmitTime
     Results.addResult(userId, tableId, total, solved, ok, attempts, undefined, lastSubmitId, lastSubmitTime)
     return {total: total, solved: solved, ok: ok, attempts: attempts, lastSubmitId: lastSubmitId, lastSubmitTime: lastSubmitTime}
 
