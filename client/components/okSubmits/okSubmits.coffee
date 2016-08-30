@@ -6,7 +6,7 @@ Template.okSubmits.helpers
         Users.findById(@user).name
         
     needSubmit: ->
-        START_DATE = "2015-01-01"
+        START_DATE = "2016-08-01"
         startDate = new Date(START_DATE)
         if new Date(@time) < startDate
             return false
@@ -30,5 +30,6 @@ Template.okSubmits.helpers
         return contests
                 
     href: ->
-        url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid='+@problem+'&submit&user_id=' + @user
+        problem = @problem.substr(1)
+        url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid='+problem+'&submit&user_id=' + @user
         return url
