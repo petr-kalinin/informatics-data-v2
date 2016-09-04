@@ -64,7 +64,7 @@ class RegionContestDownloader extends ContestDownloader
             @processContest('', @contestBaseUrl + cont[1], cont[1], 'Второй' + fullText, 'reg' + year)
             levels.push('reg' + year)
         #id, name, tables, problems, parent, order
-        Tables.addTable("reg", "reg", levels, [], "main", 1)
+        Tables.addTable("reg", "reg", levels, [], "main", 10000)
         table = Tables.findById("reg")
         #users = Users.findAll().fetch()
         #for user in users
@@ -80,5 +80,5 @@ class RegionContestDownloader extends ContestDownloader
 
 
 Meteor.startup ->
-    #(new RegionContestDownloader()).run()
-    #(new ContestDownloader()).run()
+#    (new ContestDownloader()).run()
+#    (new RegionContestDownloader()).run()
