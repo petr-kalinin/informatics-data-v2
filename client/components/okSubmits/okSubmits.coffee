@@ -5,6 +5,9 @@ Template.okSubmits.helpers
     user: ->
         Users.findById(@user).name
         
+    userHref: ->
+        "http://informatics.mccme.ru/moodle/user/view.php?id=" + @user
+        
     needSubmit: ->
         START_DATE = "2016-08-01"
         startDate = new Date(START_DATE)

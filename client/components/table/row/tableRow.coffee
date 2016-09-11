@@ -35,6 +35,8 @@ Template.result.helpers
         runId = result.lastSubmitId
         runSuff = ''
         if runId
+            if runId.indexOf("p") > 0
+                runId = runId.substr(0, runId.indexOf("p"))  # strip problem suffix
             runSuff = '&run_id=' + runId
         url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid=' + problem + runSuff
 
@@ -43,8 +45,6 @@ Template.result.helpers
         result = Results.findByUserAndTable(@user._id, @table._id)
         if not result
             return ""
-        runId = result.lastSubmitId
-        runSuff = ''
         url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid=' + problem + '&submit&user_id=' + @user._id
     
             
