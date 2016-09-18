@@ -70,6 +70,18 @@ Tables =
                 pp = parentFromParent(parent)
                 Tables.addTable(parent, parent, [], [], pp, order-1)
             Tables.findById(parent).addTable(id)
+            
+    removeDuplicateChildren: ->
+        tables = @findAll().fetch()
+        for table in tables
+            wasTables = {}
+            newTables = []
+            for subTable in table.tables
+                if not (subTable of wasTables)
+                    wasTables[subTable] = 1
+                    newTables.push(subTable)
+            table.tables = newTables
+            @collection.update({_id: table._id}, table)
         
     collection: TablesCollection
             

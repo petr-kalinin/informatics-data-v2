@@ -81,4 +81,5 @@ class RegionContestDownloader extends ContestDownloader
 
 Meteor.startup ->
 #    (new ContestDownloader()).run()
+    Tables.removeDuplicateChildren()
 #    (new RegionContestDownloader()).run()
