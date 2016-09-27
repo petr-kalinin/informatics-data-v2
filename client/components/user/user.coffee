@@ -8,7 +8,7 @@ Template.user.helpers
                 res.push (Tables.findById(id).expand() for id in ["1В", "1Г"])
             else 
                 result = Results.findByUserAndTable(@_id, table)
-                if result.attempts > 0
+                if result.lastSubmitId
                     res.push (Tables.findById(id).expand() for id in Tables.findById(table).tables)
         res
         
