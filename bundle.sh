@@ -1,0 +1,1 @@
+meteor build ../openshift --directory
