@@ -50,6 +50,7 @@ class AllSubmitDownloader
     
     run: ->
         console.log "AllSubmitDownloader::run ", @userList, @submitsPerPage, @minPages, '-', @limitPages
+        Results.disableCache()
         page = 0
         while true
             submitsUrl = @baseUrl(page, @submitsPerPage)
@@ -70,6 +71,7 @@ class AllSubmitDownloader
             u.updateChocos()
             u.updateRatingEtc()
             u.updateLevel()
+        Results.enableCache()
         console.log "Finish AllSubmitDownloader::run ", @userList, @limitPages
             
 class LastSubmitDownloader extends AllSubmitDownloader

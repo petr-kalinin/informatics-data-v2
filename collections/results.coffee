@@ -47,11 +47,26 @@ Results =
         }
 
     findByUserAndTable: (userId, tableId) ->
-        @collection.findOne {
-            _id: userId + "::" + tableId
-        }
+        key = userId + "::" + tableId
+        if not @cache
+            return @collection.findOne {
+                _id: userId + "::" + tableId
+            }
+        if not (key of @cache)
+            @cache[key] = @collection.findOne {
+                _id: userId + "::" + tableId
+            }
+        return @cache[key]
+    
+    enableCache: ->
+        @cache = {}
+        
+    disableCache: ->
+        @cache = undefined
         
     collection: ResultsCollection
+    
+    cache: {}
             
 @Results = Results
 

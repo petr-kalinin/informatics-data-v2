@@ -19,6 +19,7 @@ class @TableController extends ControllerWithTitle
         Meteor.subscribe 'meteorUser'
         
     data: ->
+        console.log("In data")
         #params = this.request.url.split("/")
         #tableIds = params[3]
         #userList = params[2]
@@ -40,6 +41,7 @@ class @TableController extends ControllerWithTitle
             user.solved = solved
             user.attempts = attempts
         users.sort(cmp)
+        console.log("Returning from data")
         return {tables: tables, users: users}
     
     name: ->
