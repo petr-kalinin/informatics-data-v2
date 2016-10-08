@@ -3,10 +3,11 @@ Template.okSubmits.helpers
         Submits.findByOutcome("OK")
         
     user: ->
-        Users.findById(@user).name
+        user = Users.findById(@user)
+        user.name + " (" + user.level + ")"
         
     userHref: ->
-        "http://informatics.mccme.ru/moodle/user/view.php?id=" + @user
+        "/user/" + @user
         
     needSubmit: ->
         START_DATE = "2016-10-01"
