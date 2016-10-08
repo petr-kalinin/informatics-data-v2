@@ -55,7 +55,10 @@ Tables =
 
     findById: (id) ->
         if not (id of @cache)
+            console.log "tables cache miss"
             @cache[id] = @collection.findOne({_id: id})
+        if not @cache[id]
+            return @cache[id]
         copy = JSON.parse(JSON.stringify(@cache[id]))
         return @collection._transform(copy)
         
