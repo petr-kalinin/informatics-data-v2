@@ -29,18 +29,23 @@ class @TableController extends ControllerWithTitle
         if tables.length == 1
             tables = tables[0].tables
         users = Users.findByList(userList).fetch()
+        newUsers = []
         for user in users
             solved = 0
             attempts = 0
+            ok = 0
             for table in tables
                 res = Results.findByUserAndTable(user._id, table._id)
                 solved += res.solved
                 attempts += res.attempts
+                ok += res.ok
             user.solved = solved
             user.attempts = attempts
-        users.sort(cmp)
+            if (solved != 0) or (attempts != 0) or (ok != 0)
+                newUsers.push(user)
+        newUsers.sort(cmp)
         console.log("Returning from data")
-        return {tables: tables, users: users}
+        return {tables: tables, users: newUsers}
     
     name: ->
         'table'
