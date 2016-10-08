@@ -11,6 +11,7 @@ TablesCollection = new Mongo.Collection 'tables'
 TablesCollection.helpers
     addTable: (id) ->
         Tables.collection.update({ _id: @_id }, {$push: { tables: id }})
+        Tables.cache = {}
         
     height: ->
         if @tables.length > 0
@@ -53,7 +54,10 @@ Tables =
     main: "main"
 
     findById: (id) ->
-        @collection.findOne _id: id
+        if not (id of @cache)
+            @cache[id] = @collection.findOne({_id: id})
+        copy = JSON.parse(JSON.stringify(@cache[id]))
+        return @collection._transform(copy)
         
     findAll: ->
         @collection.find({}, {sort: {_id: 1}})
@@ -62,6 +66,7 @@ Tables =
         @collection.update({_id: id}, 
                            {_id: id, name: name, tables: tables, problems: problems, parent: parent, order: order}, 
                            {upsert: true})
+        @cache = {}
         for prob in problems
             console.log prob, id
             Problems.findById(prob).addTable(id)
@@ -82,7 +87,10 @@ Tables =
                     newTables.push(subTable)
             table.tables = newTables
             @collection.update({_id: table._id}, table)
+            @cache = {}
         
     collection: TablesCollection
+    
+    cache: {}
             
 @Tables = Tables

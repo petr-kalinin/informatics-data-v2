@@ -25,9 +25,7 @@ class @TableController extends ControllerWithTitle
         #userList = params[2]
         tableIds = this.params.tableIds.split(",")
         userList = this.params.userList
-        tables = (Tables.findById(id) for id in tableIds)
-        for table in tables
-            table.expand()
+        tables = (Tables.findById(id).expand() for id in tableIds)
         if tables.length == 1
             tables = tables[0].tables
         users = Users.findByList(userList).fetch()

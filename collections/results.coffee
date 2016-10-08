@@ -60,7 +60,6 @@ Results =
     findByUserAndTable: (userId, tableId) ->
         key = userId + "::" + tableId
         if not (key of @cache)
-            console.log "cache miss"
             @addToCache(key, @collection.findOne {
                 _id: userId + "::" + tableId
             })
