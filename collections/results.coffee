@@ -13,15 +13,26 @@ ResultsCollection = new Mongo.Collection 'results'
 #   lastSubmitTime
 #   ignored   // for problems only
 
+MAX_CACHE_SIZE = 100000
+
 Results =
     DQconst: -10
+    
+    addToCache: (id, data) ->
+        if @cacheSize >= MAX_CACHE_SIZE
+            @cacheSize = 0
+            @cache = {}
+        @cacheSize++
+        @cache[id] = data
 
     addResult: (user, table, total, solved, ok, attempts, ignored, lastSubmitId, lastSubmitTime) ->
         userList = Users.findById(user).userList
         id = user + "::" + table
+        data = {_id: id, user: user, userList: userList, table: table, total: total, solved: solved, ok: ok, attempts: attempts, ignored: ignored, lastSubmitId: lastSubmitId, lastSubmitTime: lastSubmitTime}
         @collection.update({_id: id}, 
-                           {_id: id, user: user, userList: userList, table: table, total: total, solved: solved, ok: ok, attempts: attempts, ignored: ignored, lastSubmitId: lastSubmitId, lastSubmitTime: lastSubmitTime}, 
+                           data, 
                            {upsert: true})
+        @addToCache(id, data)
 
     findById: (id) ->
         @collection.findOne _id: id
@@ -48,25 +59,18 @@ Results =
 
     findByUserAndTable: (userId, tableId) ->
         key = userId + "::" + tableId
-        if not @cache
-            return @collection.findOne {
-                _id: userId + "::" + tableId
-            }
         if not (key of @cache)
-            @cache[key] = @collection.findOne {
+            console.log "cache miss"
+            @addToCache(key, @collection.findOne {
                 _id: userId + "::" + tableId
-            }
+            })
         return @cache[key]
     
-    enableCache: ->
-        @cache = {}
-        
-    disableCache: ->
-        @cache = undefined
-        
     collection: ResultsCollection
     
     cache: {}
+    
+    cacheSize: 0
             
 @Results = Results
 
