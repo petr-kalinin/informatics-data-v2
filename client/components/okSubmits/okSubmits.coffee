@@ -9,7 +9,7 @@ Template.okSubmits.helpers
         "http://informatics.mccme.ru/moodle/user/view.php?id=" + @user
         
     needSubmit: ->
-        START_DATE = "2016-08-01"
+        START_DATE = "2016-10-01"
         startDate = new Date(START_DATE)
         if new Date(@time) < startDate
             return false
