@@ -1,2 +1,2 @@
 @isAdmin = ->
-    Meteor.isClient and Meteor.Meteor.user() and Meteor.user().admin
+    Meteor.isClient and Meteor.user() and Meteor.user().admin
