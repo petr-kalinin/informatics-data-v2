@@ -40,19 +40,22 @@ updateResultsForProblem = (userId, problemId) ->
         lastSubmitTime = submit.time
         if submit.outcome == "IG"
             ignored = 1
+            ok = 0
             continue
         # any other result resets ignored flag
         ignored = 0
         if submit.outcome == "DQ"
             ignored = Results.DQconst
             solved = -2
+            ok = 0
             break
         else if submit.outcome == "AC"
             solved = 1
+            ok = 0
             break
         else if submit.outcome == "OK"
             ok = 1
-            break
+            continue  # we might have a future AC
         else 
             attempts++
     #console.log "updated result ", userId, problemId, solved, ok, attempts, ignored, lastSubmitId
