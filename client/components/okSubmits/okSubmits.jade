@@ -58,6 +58,9 @@ template(name='okSubmits')
                 td
                     a(href="{{href}}",target="_blank")
                         =time
+                    | [ x
+                    =attempts
+                    | ]
                 td
                     a(href="{{userHref}}")
                         =user
