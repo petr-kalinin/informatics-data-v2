@@ -23,6 +23,9 @@ Submits =
     findByOutcome: (outcome) ->
         @collection.find({outcome: outcome}, {sort: {time: 1}})
        
+    findLastByOutcome: (outcome, limit) ->
+        @collection.find({outcome: outcome}, {sort: {time: -1}, limit: limit})
+       
     addSubmit: (id, time, user, problem, outcome) ->
         @collection.update({_id: id}, {_id: id, time: time, user: user, problem: problem, outcome: outcome}, {upsert: true})
         

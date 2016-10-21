@@ -1,4 +1,6 @@
 template(name='okSubmits')
+    h1
+        | OK
     table.okSubmits
         +each submits
             if needSubmit
@@ -13,7 +15,26 @@ template(name='okSubmits')
                         =problem
                     td
                         =contests
+
+    h1
+        | AC
+    table.okSubmits
+        +each acSubmits
+            tr
+                td
+                    a(href="{{href}}",target="_blank")
+                        =time
+                td
+                    a(href="{{userHref}}")
+                        =user
+                td
+                    =problem
+                td
+                    =contests
         
+                
+                    
+    
                 
                     
     

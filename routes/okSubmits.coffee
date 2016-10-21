@@ -4,6 +4,7 @@ class @OkSubmitsController extends ControllerWithTitle
  
     waitOn: ->
         Meteor.subscribe 'okSubmits'
+        Meteor.subscribe 'lastAcSubmits'
         Meteor.subscribe 'users'
         Meteor.subscribe 'meteorUser'
         Meteor.subscribe 'tables'

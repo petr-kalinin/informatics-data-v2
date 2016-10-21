@@ -4,3 +4,5 @@ Meteor.publish 'submits', ->
 Meteor.publish 'okSubmits', ->
     Submits.findByOutcome("OK")
 
+Meteor.publish 'lastAcSubmits', ->
+    Submits.findLastByOutcome("AC", 20)

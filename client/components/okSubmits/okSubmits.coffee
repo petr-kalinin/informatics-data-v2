@@ -1,6 +1,9 @@
 Template.okSubmits.helpers
     submits: ->
         Submits.findByOutcome("OK")
+
+    acSubmits: ->
+        Submits.findByOutcome("AC")
         
     user: ->
         user = Users.findById(@user)
