@@ -6,3 +6,7 @@ Meteor.publish 'okSubmits', ->
 
 Meteor.publish 'lastAcSubmits', ->
     Submits.findLastByOutcome("AC", 20)
+
+Meteor.publish 'lastIgSubmits', ->
+    Submits.findLastByOutcome("IG", 20)
+

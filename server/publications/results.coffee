@@ -9,3 +9,6 @@ Meteor.publish 'resultsForUserListAndTable', (userList, table)->
 
 Meteor.publish 'resultsForUser', (user)->
     Results.findByUser(user)
+
+Meteor.publish 'lastWaResults', ->
+    Results.findLastWA(20)

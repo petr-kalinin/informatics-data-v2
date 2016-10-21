@@ -4,6 +4,12 @@ Template.okSubmits.helpers
 
     acSubmits: ->
         Submits.findByOutcome("AC")
+
+    igSubmits: ->
+        Submits.findByOutcome("IG")
+
+    waResults: ->
+        results = Results.findLastWA(100)
         
     user: ->
         user = Users.findById(@user)
@@ -21,12 +27,20 @@ Template.okSubmits.helpers
             return true
         return false
     
+    needAcSubmit: ->
+        if Problems.findById(@problem)
+            return true
+        return false
+    
     problem: ->
-        p = Problems.findById(@problem)
+        p = Problems.findById(@problem || @table)
         return p.name
     
+    time: ->
+        @time || @lastSubmitTime
+    
     contests: ->
-        p = Problems.findById(@problem)
+        p = Problems.findById(@problem || @table)
         contests = ""
         for t in p.tables
             table = Tables.findById(t)
@@ -37,6 +51,6 @@ Template.okSubmits.helpers
         return contests
                 
     href: ->
-        problem = @problem.substr(1)
+        problem = (@problem || @table).substr(1)
         url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid='+problem+'&submit&user_id=' + @user
         return url

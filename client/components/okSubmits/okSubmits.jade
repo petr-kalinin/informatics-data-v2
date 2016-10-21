@@ -20,6 +20,40 @@ template(name='okSubmits')
         | AC
     table.okSubmits
         +each acSubmits
+            if needAcSubmit
+                tr
+                    td
+                        a(href="{{href}}",target="_blank")
+                            =time
+                    td
+                        a(href="{{userHref}}")
+                            =user
+                    td
+                        =problem
+                    td
+                        =contests
+            
+    h1
+        | IG
+    table.okSubmits
+        +each igSubmits
+            if needAcSubmit
+                tr
+                    td
+                        a(href="{{href}}",target="_blank")
+                            =time
+                    td
+                        a(href="{{userHref}}")
+                            =user
+                    td
+                        =problem
+                    td
+                        =contests
+                
+    h1
+        | WA
+    table.okSubmits
+        +each waResults
             tr
                 td
                     a(href="{{href}}",target="_blank")
@@ -31,9 +65,8 @@ template(name='okSubmits')
                     =problem
                 td
                     =contests
-        
                 
-                    
+    
     
                 
                     

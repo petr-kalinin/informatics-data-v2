@@ -65,6 +65,19 @@ Results =
             })
         return @cache[key]
     
+    findLastWA: (limit) ->
+        @collection.find {
+            total: 1,  # this is a problem, not a contest
+            solved: 0,
+            ok: 0,
+            ignored: 0,
+            attempts: {$gte: 1},
+        }, {
+            sort: { lastSubmitTime: -1 },
+            limit: limit
+        }
+        
+    
     collection: ResultsCollection
     
     cache: {}
@@ -89,3 +102,11 @@ if Meteor.isServer
         Results.collection._ensureIndex
             user: 1
             table: 1
+
+        Results.collection._ensureIndex
+            total: 1
+            solved: 1 
+            ok: 1
+            ignored: 1
+            attempts: 1
+            lastSubmitTime: -1
