@@ -3,10 +3,10 @@ Template.okSubmits.helpers
         Submits.findByOutcome("OK")
 
     acSubmits: ->
-        Submits.findByOutcome("AC")
+        Submits.findLastByOutcome("AC", 100)
 
     igSubmits: ->
-        Submits.findByOutcome("IG")
+        Submits.findLastByOutcome("IG", 100)
 
     waResults: ->
         results = Results.findLastWA(100)
