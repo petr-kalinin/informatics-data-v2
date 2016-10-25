@@ -17,6 +17,25 @@ template(name='okSubmits')
                         =contests
 
     h1
+        | WA
+    table.okSubmits
+        +each waResults
+            tr
+                td
+                    a(href="{{href}}",target="_blank")
+                        =time
+                    | [ x
+                    =attempts
+                    | ]
+                td
+                    a(href="{{userHref}}")
+                        =user
+                td
+                    =problem
+                td
+                    =contests
+                
+    h1
         | AC
     table.okSubmits
         +each acSubmits
@@ -49,28 +68,4 @@ template(name='okSubmits')
                         =problem
                     td
                         =contests
-                
-    h1
-        | WA
-    table.okSubmits
-        +each waResults
-            tr
-                td
-                    a(href="{{href}}",target="_blank")
-                        =time
-                    | [ x
-                    =attempts
-                    | ]
-                td
-                    a(href="{{userHref}}")
-                        =user
-                td
-                    =problem
-                td
-                    =contests
-                
-    
-    
-                
-                    
     
