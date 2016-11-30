@@ -56,7 +56,7 @@ updateResultsForProblem = (userId, problemId) ->
         else if submit.outcome == "OK"
             ok = 1
             continue  # we might have a future AC
-        else 
+        else  if submit.outcome != "CE"
             attempts++
     #console.log "updated result ", userId, problemId, solved, ok, attempts, ignored, lastSubmitId
     Results.addResult(userId, problemId, 1, solved, ok, attempts, ignored, lastSubmitId, lastSubmitTime)

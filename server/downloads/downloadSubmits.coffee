@@ -6,6 +6,7 @@ class AllSubmitDownloader
     AC: 'Зачтено/Принято'
     IG: 'Проигнорировано'
     DQ: 'Дисквалифицировано'
+    CE: 'Ошибка компиляции'
         
     addedUsers: {}
         
@@ -16,6 +17,8 @@ class AllSubmitDownloader
         #if uid == "230963"
         #    console.log uid, name, pid, runid, prob, date, outcome
         res = @needContinueFromSubmit(runid)
+        if (outcome == @CE)  # completely ignore CEs
+            outcome = "CE"
         if (outcome == @AC) 
             outcome = "AC"
         if (outcome == @IG) 
