@@ -33,8 +33,8 @@ UsersCollection.helpers
         Users.collection.update({_id: @_id}, {$set: res})
         
     updateLevel: ->
-        @level = calculateLevel @_id, @baseLevel, Date("2100-01-01")
-        @startLevel = calculateLevel @_id, @baseLevel, Date(SEMESTER_START)
+        @level = calculateLevel @_id, @baseLevel, new Date("2100-01-01")
+        @startLevel = calculateLevel @_id, @baseLevel, new Date(SEMESTER_START)
         Users.collection.update({_id: @_id}, {$set: {level: @level, startLevel : @startLevel}})
 
     setBaseLevel: (level) ->

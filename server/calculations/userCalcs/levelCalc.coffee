@@ -1,4 +1,5 @@
 @calculateLevel = (user, baseLevel, lastDate) ->
+    #console.log "lastdate=", lastDate
     for bigLevel in [1..10]
         for smallLevel in ["А", "Б", "В", "Г"]
             tableId = bigLevel + smallLevel
@@ -21,7 +22,9 @@
                     if result.solved == 0
                         continue
                     submitDate = new Date(result.lastSubmitTime)
+                    #console.log "submitDate=", submitDate
                     if submitDate >= lastDate
+                        #console.log "skipping submit"
                         continue
                     probAc++
             needProblem = probNumber
