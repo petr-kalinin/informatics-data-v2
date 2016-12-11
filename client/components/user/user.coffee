@@ -31,3 +31,9 @@ Template.user.events
         event.preventDefault()
         false
 
+Template.user.events    
+    "submit .cfLogin": (event) ->
+        Meteor.call("setCfLogin", @_id, event.target.cfLogin.value)
+        event.preventDefault()
+        false
+

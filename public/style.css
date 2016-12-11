@@ -6528,6 +6528,10 @@ table.chocos {
   width: auto;
 }
 
+.cfColor {
+  font-weight: bold;
+}
+
 table.solvedByWeek,
 table.solvedByWeek td {
   border: 1px solid black;
@@ -6542,6 +6546,10 @@ table.solvedByWeek td {
 
 table.solvedByWeek {
   border-collapse: true;
+}
+
+.cfColor {
+  font-weight: bold;
 }
 
 .userName {

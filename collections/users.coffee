@@ -14,6 +14,9 @@ UsersCollection = new Mongo.Collection 'tableUsers'
 #   okByWeek
 #   rating
 #   activity
+#   cfLogin
+#   cfRating
+#   cfColor
 
 @startDayForWeeks = 
     "lic40": "2016-08-31"
@@ -36,6 +39,12 @@ UsersCollection.helpers
         @level = calculateLevel @_id, @baseLevel, new Date("2100-01-01")
         @startLevel = calculateLevel @_id, @baseLevel, new Date(SEMESTER_START)
         Users.collection.update({_id: @_id}, {$set: {level: @level, startLevel : @startLevel}})
+        
+    updateCfRating: ->
+        res = updateCfRating this
+        @cfRating = res[0]
+        @cfColor = res[1]
+        Users.collection.update({_id: @_id}, {$set: {cfRating: @cfRating, cfColor: @cfColor}})
 
     setBaseLevel: (level) ->
         Users.collection.update({_id: @_id}, {$set: {baseLevel: level}})
@@ -43,6 +52,12 @@ UsersCollection.helpers
         if Meteor.isServer
             @updateLevel()
             @updateRatingEtc()
+
+    setCfLogin: (cfLogin) ->
+        Users.collection.update({_id: @_id}, {$set: {cfLogin: cfLogin}})
+        @cfLogin = cfLogin
+        if Meteor.isServer
+            @updateCfRating()
 
 Users =
     findById: (id) ->

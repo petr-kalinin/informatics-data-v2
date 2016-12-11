@@ -19,6 +19,12 @@ template(name='userLine')
         td
             span(title="Активность")
                 =activity
+        td
+            span(title="Codeforces рейтинг")
+                if cfRating
+                    a(href="http://codeforces.com/profile/{{cfLogin}}")
+                        span.cfColor(style="color:{{cfColor}};")
+                            =cfRating
                 
                     
     

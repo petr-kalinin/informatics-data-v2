@@ -10,6 +10,13 @@ template(name='user')
             div
                 | Уровень на начало полугодия:
                 =startLevel
+            div
+                | CF Login
+                form.cfLogin
+                        input(type="text",name="cfLogin",value="{{cfLogin}}",size="20")
+            div
+                | Уровень на начало полугодия:
+                =startLevel
         div
             | Уровень:
             =level
@@ -19,6 +26,12 @@ template(name='user')
         div
             | Активность:
             =activity
+        if cfRating
+            div
+                | Codeforces рейтинг:
+                a(href="http://codeforces.com/profile/{{cfLogin}}")
+                    span.cfColor(style="color:{{cfColor}};")
+                        =cfRating
     if lic40
         h2
             | Шоколадки
