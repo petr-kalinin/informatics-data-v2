@@ -2,6 +2,7 @@ class AllSubmitDownloader
     
     constructor: (@baseUrl, @userList, @submitsPerPage, @minPages, @limitPages) ->
         @addedUsers = {}
+        @dirtyResults = {}
     
     AC: 'Зачтено/Принято'
     IG: 'Проигнорировано'
@@ -12,6 +13,22 @@ class AllSubmitDownloader
         
     needContinueFromSubmit: (runid) ->
         true
+        
+    setDirty: (userId, probid) ->
+        @dirtyResults[userId + "::" + probid] = 1
+        problem = Problems.findById(probid)
+        if not problem
+            console.log "unknown problem ", probid
+            return
+        for table in problem.tables
+            t = table
+            while true
+                t = Tables.findById(t)
+                if t._id == Tables.main
+                    break
+                @dirtyResults[userId + "::" + t._id] = 1
+                t = t.parent
+        @dirtyResults[userId + "::" + Tables.main] = 1
 
     processSubmit: (uid, name, pid, runid, prob, date, outcome) ->
         #if uid == "230963"
@@ -28,9 +45,10 @@ class AllSubmitDownloader
         Submits.addSubmit(runid, date, uid, "p"+pid, outcome)
         Users.addUser(uid, name, @userList)
         @addedUsers[uid] = uid
+        @setDirty(uid, "p"+pid)
         res
     
-    parseSubmits: (submitsTable) ->
+    parseSubmits: (submitsTable, canBreak) ->
         submitsRows = submitsTable.split("<tr>")
         result = true
         wasSubmit = false
@@ -49,6 +67,8 @@ class AllSubmitDownloader
             resultSubmit = @processSubmit(uid, name, pid, runid, prob, date, outcome)
             result = result and resultSubmit
             wasSubmit = true
+            if (not result) and canBreak
+                break
         return result and wasSubmit
     
     run: ->
@@ -58,7 +78,7 @@ class AllSubmitDownloader
             submitsUrl = @baseUrl(page, @submitsPerPage)
             submits = syncDownload(submitsUrl)
             submits = submits["data"]["result"]["text"]
-            result = @parseSubmits(submits)
+            result = @parseSubmits(submits, page >= @minPages)
             if (page < @minPages) # always load at least minPages pages
                 result = true
             if not result
@@ -68,7 +88,7 @@ class AllSubmitDownloader
                 break
         tables = Tables.findAll().fetch()
         for uid,tmp of @addedUsers
-            updateResults(uid)
+            updateResults(uid, @dirtyResults)
             u = Users.findById(uid)
             u.updateChocos()
             u.updateRatingEtc()
@@ -107,12 +127,12 @@ runDownload = ->
             (new AllSubmitDownloader(lic40url, 'lic40', 1000, 1, 1e9)).run()
             (new AllSubmitDownloader(zaochUrl, 'zaoch', 1000, 1, 1e9)).run()
             Downloads.setLastDownloadTime("All", now)
-        else if Downloads.lastDownloadTime("UntilIgnored") < now - 4.9*60*1000
+        else if Downloads.lastDownloadTime("UntilIgnored") < now - 2.9*60*1000
             console.log "running UntilIgnored"
             (new UntilIgnoredSubmitDownloader(lic40url, 'lic40', 100, 2, 4)).run()
             (new UntilIgnoredSubmitDownloader(zaochUrl, 'zaoch', 100, 2, 4)).run()
             Downloads.setLastDownloadTime("UntilIgnored", now)
-        else if Downloads.lastDownloadTime("Last") < now - 1.9*60*1000
+        else if Downloads.lastDownloadTime("Last") < now - 0.9*60*1000
             console.log "running Last"
             (new LastSubmitDownloader(lic40url, 'lic40', 20, 1, 1)).run()
             (new LastSubmitDownloader(zaochUrl, 'zaoch', 20, 1, 1)).run()
@@ -125,7 +145,7 @@ runDownload = ->
 SyncedCron.add
     name: 'downloadSubmits',
     schedule: (parser) ->
-        return parser.text('every 2 minutes');
+        return parser.text('every 30 seconds');
 #        return parser.text('every 5 minutes');
     job: -> 
         console.log("1")

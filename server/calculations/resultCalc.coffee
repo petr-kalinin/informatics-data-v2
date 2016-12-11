@@ -1,4 +1,6 @@
-updateResultsForTable = (userId, tableId) ->
+updateResultsForTable = (userId, tableId, dirtyResults) ->
+    if not ((userId + "::" + tableId) of dirtyResults)
+        return Results.findByUserAndTable(userId, tableId)
     total = 0
     solved = 0
     ok = 0
@@ -17,17 +19,19 @@ updateResultsForTable = (userId, tableId) ->
     
     table = Tables.findById(tableId)
     for child in table.tables
-        res = updateResultsForTable(userId, child)
+        res = updateResultsForTable(userId, child, dirtyResults)
         processRes(res)
     for prob in table.problems
-        res = updateResultsForProblem(userId, prob)
+        res = updateResultsForProblem(userId, prob, dirtyResults)
         processRes(res)
         
     #console.log "updated result ", userId, tableId, total, solved, ok, attempts, lastSubmitTime
     Results.addResult(userId, tableId, total, solved, ok, attempts, undefined, lastSubmitId, lastSubmitTime)
     return {total: total, solved: solved, ok: ok, attempts: attempts, lastSubmitId: lastSubmitId, lastSubmitTime: lastSubmitTime}
 
-updateResultsForProblem = (userId, problemId) ->
+updateResultsForProblem = (userId, problemId, dirtyResults) ->
+    if not ((userId + "::" + problemId) of dirtyResults)
+        return Results.findByUserAndTable(userId, problemId)
     submits = Submits.findByUserAndProblem(userId, problemId).fetch()
     solved = 0
     ok = 0
@@ -62,9 +66,9 @@ updateResultsForProblem = (userId, problemId) ->
     Results.addResult(userId, problemId, 1, solved, ok, attempts, ignored, lastSubmitId, lastSubmitTime)
     return {total: 1, solved: solved, ok: ok, attempts: attempts, ignored: ignored, lastSubmitId: lastSubmitId, lastSubmitTime: lastSubmitTime}
 
-@updateResults = (user) ->
+@updateResults = (user, dirtyResults) ->
     console.log "updating results for user ", user
-    updateResultsForTable(user, Tables.main)
+    updateResultsForTable(user, Tables.main, dirtyResults)
     
 #Meteor.startup ->
 #    for u in Users.findAll().fetch()
