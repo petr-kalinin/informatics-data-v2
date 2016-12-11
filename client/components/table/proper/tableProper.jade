@@ -1,8 +1,7 @@
 template(name='tableProper')
     table.mainTable
         tr
-            td.topLeft
-                | &nbsp;
+            +userHeader
             +tableHeader1
         //tr
             //td
@@ -10,7 +9,6 @@ template(name='tableProper')
             //+tableHeader2
         +each users
             tr
-                td(ondblclick="window.open('{{url}}','_blank')")
-                    +userName
+                +userLine
                 +tableRow user=this tables=../tables
 
