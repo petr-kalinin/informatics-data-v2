@@ -6,6 +6,7 @@ colors = [[0, "gray"], [1200, "green"], [1400, "#03A89E"], [1600, "blue"],
         return
     href = "http://codeforces.com/api/user.info?handles=" + user.cfLogin
     text = syncDownload(href).content
+    console.log "cf returns ", text
     data = JSON.parse(text)["result"]
     rating = data[0]["rating"]
     color = ""

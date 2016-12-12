@@ -42,6 +42,8 @@ UsersCollection.helpers
         
     updateCfRating: ->
         res = updateCfRating this
+        if not res
+            return
         @cfRating = res[0]
         @cfColor = res[1]
         Users.collection.update({_id: @_id}, {$set: {cfRating: @cfRating, cfColor: @cfColor}})
