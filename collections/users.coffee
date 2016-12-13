@@ -17,6 +17,8 @@ UsersCollection = new Mongo.Collection 'tableUsers'
 #   cfLogin
 #   cfRating
 #   cfColor
+#   cfActivity
+#   cfProgress
 
 @startDayForWeeks = 
     "lic40": "2016-08-31"
@@ -44,9 +46,11 @@ UsersCollection.helpers
         res = updateCfRating this
         if not res
             return
-        @cfRating = res[0]
-        @cfColor = res[1]
-        Users.collection.update({_id: @_id}, {$set: {cfRating: @cfRating, cfColor: @cfColor}})
+        @cfRating = res.rating
+        @cfColor = res.color
+        @cfActivity = res.activity
+        @cfProgress = res.progress
+        Users.collection.update({_id: @_id}, {$set: {cfRating: @cfRating, cfColor: @cfColor, cfActivity: @cfActivity, cfProgress: @cfProgress}})
 
     setBaseLevel: (level) ->
         Users.collection.update({_id: @_id}, {$set: {baseLevel: level}})

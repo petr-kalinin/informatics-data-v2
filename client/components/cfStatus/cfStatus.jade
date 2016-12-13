@@ -1,0 +1,11 @@
+template(name='cfStatus')
+    a(href="http://codeforces.com/profile/{{cfLogin}}")
+        span.cfColor(style="color:{{cfColor}};")
+            =cfRating
+    |  (
+    span.cfProgress(title="Прирост рейтинга с начала полугодия",style="color:{{cfProgressColor}}")
+        =cfProgressFormatted
+    | /
+    span(title="Количество написанных контестов с начала полугодия")
+        =cfActivity
+    | )

@@ -6447,6 +6447,14 @@ td.active {
   margin-bottom: 5px;
 }
 
+.cfColor {
+  font-weight: bold;
+}
+
+.cfProgress {
+  font-weight: bold;
+}
+
 td.chocos {
   padding-right: 10px;
   padding-bottom: 5px;
@@ -6526,10 +6534,6 @@ table.okSubmits td {
 
 table.chocos {
   width: auto;
-}
-
-.cfColor {
-  font-weight: bold;
 }
 
 table.solvedByWeek,

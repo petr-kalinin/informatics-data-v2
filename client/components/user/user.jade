@@ -29,9 +29,7 @@ template(name='user')
         if cfRating
             div
                 | Codeforces рейтинг:
-                a(href="http://codeforces.com/profile/{{cfLogin}}")
-                    span.cfColor(style="color:{{cfColor}};")
-                        =cfRating
+                +cfStatus
     if lic40
         h2
             | Шоколадки
