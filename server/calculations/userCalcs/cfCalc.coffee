@@ -21,9 +21,10 @@ getActivityAndProgress = (user) ->
     for elem in data
         thisDate = new Date(elem["ratingUpdateTimeSeconds"] * 1000)
         #console.log "contest date", thisDate, " (", elem["ratingUpdateTimeSeconds"], ") startDate", startDate
-        if (thisDate > startDate) and (not first)  # very first contest has no meaning as start rating is 1500
-            change += elem["newRating"] - elem["oldRating"]
-        contests += 1
+        if (thisDate > startDate) 
+            if (not first)  # very first contest has no meaning as start rating is 1500
+                change += elem["newRating"] - elem["oldRating"]
+            contests += 1
         first = false
     return activity: contests, progress: change
 
