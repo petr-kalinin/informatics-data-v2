@@ -16,3 +16,11 @@ class @SolvedByWeekTableController extends ControllerWithTitle
         
     title: ->
         'Посылки по неделям'
+
+Router.route '/solvedByWeekTable/:userList/c', name: 'solvedByWeekTableC'
+class @SolvedByWeekTableCController extends SolvedByWeekTableController
+    server: false
+        
+    template: 'solvedByWeekTable'
+        
+    fastRender: false
