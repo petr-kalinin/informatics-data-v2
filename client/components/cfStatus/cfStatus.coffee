@@ -3,7 +3,7 @@ Template.cfStatus.helpers
         if @cfProgress > 0
             "+" + @cfProgress
         else
-            @cfprogress
+            @cfProgress
             
     cfProgressColor: ->
         if @cfProgress > 10
