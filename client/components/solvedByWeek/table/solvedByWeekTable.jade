@@ -1,6 +1,10 @@
 template(name='solvedByWeekTable')
     h1
         | Сданные задачи по неделям
+    p
+        | Отображается количество сданных задач по неделям, 0.5 — были попытки сдавать, но ни одной удачной.
+    p
+        | Имена школьников — ссылки на странички с результатами кадого конкретного школьника.
     table.mainTable
         +solvedByWeekHeader userList=this name=true
         +each users

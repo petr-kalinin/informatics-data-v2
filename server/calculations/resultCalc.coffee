@@ -1,6 +1,8 @@
 updateResultsForTable = (userId, tableId, dirtyResults) ->
     if not ((userId + "::" + tableId) of dirtyResults)
-        return Results.findByUserAndTable(userId, tableId)
+        result = Results.findByUserAndTable(userId, tableId)
+        if result
+            return result
     total = 0
     solved = 0
     ok = 0
@@ -31,7 +33,9 @@ updateResultsForTable = (userId, tableId, dirtyResults) ->
 
 updateResultsForProblem = (userId, problemId, dirtyResults) ->
     if not ((userId + "::" + problemId) of dirtyResults)
-        return Results.findByUserAndTable(userId, problemId)
+        result = Results.findByUserAndTable(userId, problemId)
+        if result
+            return result
     submits = Submits.findByUserAndProblem(userId, problemId).fetch()
     solved = 0
     ok = 0
@@ -70,7 +74,12 @@ updateResultsForProblem = (userId, problemId, dirtyResults) ->
     console.log "updating results for user ", user
     updateResultsForTable(user, Tables.main, dirtyResults)
     
-#Meteor.startup ->
+Meteor.startup ->
+#    updateResults("262028", {})
+#    u = Users.findById("262028")
+#    u.updateChocos()
+#    u.updateRatingEtc()
+#    u.updateLevel()
 #    for u in Users.findAll().fetch()
 #        updateResults(u._id)
     
