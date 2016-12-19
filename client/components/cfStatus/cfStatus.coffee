@@ -1,9 +1,9 @@
 Template.cfStatus.helpers
     cfProgressFormatted: ->
         if @cfProgress > 0
-            "+" + @cfProgress
+            "+" + @cfProgress.toFixed(1)
         else
-            @cfProgress
+            @cfProgress.toFixed(1)
             
     cfProgressColor: ->
         if @cfProgress > 10
@@ -12,4 +12,6 @@ Template.cfStatus.helpers
             "#aa0000"
         else
             "inherit"
-            
+
+    cfActivityFormatted: ->
+        @cfActivity.toFixed(1)

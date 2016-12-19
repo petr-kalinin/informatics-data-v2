@@ -8,6 +8,12 @@ getRating = (user) ->
     data = JSON.parse(text)["result"]
     return data[0]["rating"]
 
+MSEC_IN_WEEK = 1000*60*60*24*7
+EXPONENT = MSEC_IN_WEEK * 4
+timeScore = (date) ->
+    weeks = (new Date() - date)/EXPONENT
+    return Math.pow(0.5, weeks)
+
 getActivityAndProgress = (user) ->
     href = "http://codeforces.com/api/user.rating?handle=" + user.cfLogin
     text = syncDownload(href).content
@@ -18,14 +24,14 @@ getActivityAndProgress = (user) ->
     change = 0
     contests = 0
     first = true
+    
     for elem in data
         thisDate = new Date(elem["ratingUpdateTimeSeconds"] * 1000)
         cfResults.addResult(user._id, elem["contestId"], thisDate, elem["rank"], elem["oldRating"], elem["newRating"])
-        #console.log "contest date", thisDate, " (", elem["ratingUpdateTimeSeconds"], ") startDate", startDate
-        if (thisDate > startDate) 
-            if (not first)  # very first contest has no meaning as start rating is 1500
-                change += elem["newRating"] - elem["oldRating"]
-            contests += 1
+        if (not first)  # very first contest has no meaning as start rating is 1500
+            change += (elem["newRating"] - elem["oldRating"]) * timeScore(thisDate)
+        contests += timeScore(thisDate)
+        console.log (elem["newRating"] - elem["oldRating"]), timeScore(thisDate)
         first = false
     return activity: contests, progress: change
 
