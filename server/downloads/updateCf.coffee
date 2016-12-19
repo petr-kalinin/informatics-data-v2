@@ -10,4 +10,7 @@ SyncedCron.add
     job: -> 
         console.log("updating Cf ratings")
         updateAllCf()
+        
+Meteor.startup ->
+#    Users.findById("238375").updateCfRating()
    

@@ -54,3 +54,26 @@ Template.okSubmits.helpers
         problem = (@problem || @table).substr(1)
         url = 'http://informatics.mccme.ru/moodle/mod/statements/view3.php?chapterid='+problem+'&submit&user_id=' + @user
         return url
+    
+    lastCfResults: -> 
+        cfResults.findLastResults(20)
+        
+    cfTime: ->
+        moment(@time).format("YYYY-MM-DD HH:mm")
+        
+    cfUser: ->
+        user = Users.findById(@userId)
+        user.name + " (" + user.level + ")"
+
+    cfUserHref: ->
+        "/user/" + @userId
+        
+    cfResultHref: ->
+        user = Users.findById(@userId)
+        "http://codeforces.com/submissions/" + user.cfLogin + "/contest/" + @contestId
+        
+    cfRatingStr: ->
+        delta = @newRating - @oldRating
+        if delta > 0
+            delta = "+" + delta
+        delta + " (" + @oldRating + " -> " + @newRating + " / " + @place + ")"

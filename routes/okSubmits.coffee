@@ -11,6 +11,7 @@ class @OkSubmitsController extends ControllerWithTitle
         Meteor.subscribe 'meteorUser'
         Meteor.subscribe 'tables'
         Meteor.subscribe 'problems'
+        Meteor.subscribe 'lastCfResults'
         
     data: ->
         return

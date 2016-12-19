@@ -68,4 +68,18 @@ template(name='okSubmits')
                         =problem
                     td
                         =contests
-    
+    h1
+        | CF
+    table.okSubmits
+        +each lastCfResults
+            tr
+                td
+                    =cfTime
+                td
+                    a(href="{{cfUserHref}}")
+                        =cfUser
+                td
+                    =contestId
+                td
+                    a(href="{{cfResultHref}}")
+                        =cfRatingStr

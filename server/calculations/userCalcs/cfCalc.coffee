@@ -20,6 +20,7 @@ getActivityAndProgress = (user) ->
     first = true
     for elem in data
         thisDate = new Date(elem["ratingUpdateTimeSeconds"] * 1000)
+        cfResults.addResult(user._id, elem["contestId"], thisDate, elem["rank"], elem["oldRating"], elem["newRating"])
         #console.log "contest date", thisDate, " (", elem["ratingUpdateTimeSeconds"], ") startDate", startDate
         if (thisDate > startDate) 
             if (not first)  # very first contest has no meaning as start rating is 1500
