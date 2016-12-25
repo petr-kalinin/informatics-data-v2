@@ -1,4 +1,13 @@
 template(name='okSubmits')
+    h2
+        | All: 
+        =allUpdateTime
+    h2
+        | UntilIgnored: 
+        =ignoredUpdateTime
+    h2
+        | Last: 
+        =lastUpdateTime
     h1
         | OK
     table.okSubmits

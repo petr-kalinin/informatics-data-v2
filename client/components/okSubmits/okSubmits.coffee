@@ -1,4 +1,13 @@
 Template.okSubmits.helpers
+    allUpdateTime: ->
+        Downloads.lastDownloadTime("All")
+
+    ignoredUpdateTime: ->
+        Downloads.lastDownloadTime("UntilIgnored")
+        
+    lastUpdateTime: ->
+        Downloads.lastDownloadTime("Last")
+
     submits: ->
         Submits.findByOutcome("OK")
 
