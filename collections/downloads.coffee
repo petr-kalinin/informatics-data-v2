@@ -1,6 +1,9 @@
 DownloadsCollection = new Mongo.Collection 'downloads'
 
 Downloads =
+    findAll: ->
+        @collection.find {}
+
     lastDownloadTime: (id) ->
         doc = @collection.findOne _id: "last" + id
         if !doc
