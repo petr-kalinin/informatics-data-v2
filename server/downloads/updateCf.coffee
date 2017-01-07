@@ -12,5 +12,5 @@ SyncedCron.add
         updateAllCf()
         
 Meteor.startup ->
-#    Users.findById("238375").updateCfRating()
+#    Users.findById("238375").updateCfRating( )
    
