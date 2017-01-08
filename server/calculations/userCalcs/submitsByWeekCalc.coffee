@@ -69,6 +69,17 @@ activityScore = (level, date) ->
             if !weekOk[week]
                 weekOk[week] = 0
             weekOk[week]++
+    for level in ["1А", "1Б"]
+        console.log "checking add probs ", level, user.baseLevel
+        if level >= user.baseLevel 
+            break
+        console.log "list problems"
+        for prob in @Problems.findByLevel(level).fetch()
+            console.log "try problem ", prob
+            if probSolved[prob._id]
+                continue
+            console.log "correcting user ", user.name, " problem ", prob
+            rating += levelScore(level)
     for week of wasSubmits
         if !weekSolved[week]
             weekSolved[week] = 0.5
@@ -88,7 +99,8 @@ activityScore = (level, date) ->
         active: if activity > ACTIVITY_THRESHOLD then 1 else 0
     }
     
-#Meteor.startup ->
+Meteor.startup ->
+#    Users.findById("238375").updateRatingEtc( )
 #    for u in Users.findAll().fetch()
 #        u.updateRatingEtc()
 #        console.log u.name, u.rating, u.activity

@@ -43,6 +43,9 @@ Problems =
     findByTable: (table) ->
         @collection.find tables: table
 
+    findByLevel: (level) ->
+        @collection.find level: level
+
     findAll: ->
         @collection.find {}
         
