@@ -71,11 +71,9 @@ activityScore = (level, date) ->
             weekOk[week]++
     for level in ["1А", "1Б"]
         console.log "checking add probs ", level, user.baseLevel
-        if level >= user.baseLevel 
+        if (!user.baseLevel) or (level >= user.baseLevel)
             break
-        console.log "list problems"
         for prob in @Problems.findByLevel(level).fetch()
-            console.log "try problem ", prob
             if probSolved[prob._id]
                 continue
             console.log "correcting user ", user.name, " problem ", prob
