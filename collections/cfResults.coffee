@@ -17,7 +17,7 @@ cfResultsCollection = new Mongo.Collection 'cfResults'
         
     findLastResults: (limit) ->
         @collection.find {}, {
-            sort: { time: -1 },
+            sort: { time: -1, place: 1 },
             limit: limit
         }
     
@@ -28,3 +28,4 @@ if Meteor.isServer
     Meteor.startup ->
         cfResults.collection._ensureIndex
             time: -1
+            place: 1
