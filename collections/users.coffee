@@ -21,8 +21,8 @@ UsersCollection = new Mongo.Collection 'tableUsers'
 #   cfProgress
 
 @startDayForWeeks = 
-    "lic40": "2016-08-31"
-    "zaoch": "2016-08-21"
+    "lic40": "2016-12-28"
+    "zaoch": "2017-01-01"
 @MSEC_IN_WEEK = 7 * 24 * 60 * 60 * 1000
 @SEMESTER_START = "2016-06-01"
 

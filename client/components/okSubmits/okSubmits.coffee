@@ -28,7 +28,7 @@ Template.okSubmits.helpers
         "/user/" + @user
         
     needSubmit: ->
-        START_DATE = "2016-12-20"
+        START_DATE = "2017-02-10"
         startDate = new Date(START_DATE)
         if new Date(@time) < startDate
             return false

@@ -52,6 +52,7 @@ class RegionContestDownloader extends ContestDownloader
         '2014': ['10372', '10376']
         '2015': ['14482', '14483']
         '2016': ['18805', '18806']
+        '2017': ['24702', '24703']
     
     contestBaseUrl: 'http://informatics.mccme.ru/mod/statements/view.php?id='
         
@@ -79,7 +80,13 @@ class RegionContestDownloader extends ContestDownloader
 #        (new ContestDownloader()).run()
 
 
-Meteor.startup ->
+#Meteor.startup ->
 #    (new ContestDownloader()).run()
 #    (new RegionContestDownloader()).run()
 #    Tables.removeDuplicateChildren()
+#    for u in Users.findAll().fetch()
+#        tables = Tables.findAll().fetch()
+#        updateResults(u._id)
+#        u.updateChocos()
+#        u.updateRatingEtc()
+#        u.updateLevel( )

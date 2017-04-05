@@ -1,5 +1,5 @@
 updateResultsForTable = (userId, tableId, dirtyResults) ->
-    if not ((userId + "::" + tableId) of dirtyResults)
+    if dirtyResults and (not ((userId + "::" + tableId) of dirtyResults))
         result = Results.findByUserAndTable(userId, tableId)
         if result
             return result
@@ -32,7 +32,7 @@ updateResultsForTable = (userId, tableId, dirtyResults) ->
     return {total: total, solved: solved, ok: ok, attempts: attempts, lastSubmitId: lastSubmitId, lastSubmitTime: lastSubmitTime}
 
 updateResultsForProblem = (userId, problemId, dirtyResults) ->
-    if not ((userId + "::" + problemId) of dirtyResults)
+    if dirtyResults and (not ((userId + "::" + problemId) of dirtyResults))
         result = Results.findByUserAndTable(userId, problemId)
         if result
             return result
