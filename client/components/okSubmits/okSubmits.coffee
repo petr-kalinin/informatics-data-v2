@@ -22,7 +22,10 @@ Template.okSubmits.helpers
         
     user: ->
         user = Users.findById(@user)
-        user.name + " (" + user.level + ")"
+        star = ""
+        if user.userList == "stud"
+            star = "*"
+        star + user.name + " (" + user.level + ")"
         
     userHref: ->
         "/user/" + @user
