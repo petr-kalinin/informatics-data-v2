@@ -112,6 +112,9 @@ lic40url = (page, submitsPerPage) ->
 zaochUrl = (page, submitsPerPage) ->
     'http://informatics.mccme.ru/moodle/ajax/ajax.php?problem_id=0&group_id=5402&user_id=0&lang_id=-1&status_id=-1&statement_id=0&objectName=submits&count=' + submitsPerPage + '&with_comment=&page=' + page + '&action=getHTMLTable'
     
+studUrl = (page, submitsPerPage) ->
+    'http://informatics.mccme.ru/moodle/ajax/ajax.php?problem_id=0&group_id=7170&user_id=0&lang_id=-1&status_id=-1&statement_id=0&objectName=submits&count=' + submitsPerPage + '&with_comment=&page=' + page + '&action=getHTMLTable'
+    
 MSEC_IN_DAY = 24*60*60*1000
     
 runDownload = ->
@@ -126,16 +129,19 @@ runDownload = ->
             console.log "running All"
             (new AllSubmitDownloader(lic40url, 'lic40', 1000, 1, 1e9)).run()
             (new AllSubmitDownloader(zaochUrl, 'zaoch', 1000, 1, 1e9)).run()
+            (new AllSubmitDownloader(studUrl, 'stud', 1000, 1, 1e9)).run()
             Downloads.setLastDownloadTime("All", now)
         else if Downloads.lastDownloadTime("UntilIgnored") < now - 2.9*60*1000
             console.log "running UntilIgnored"
             (new UntilIgnoredSubmitDownloader(lic40url, 'lic40', 100, 2, 4)).run()
             (new UntilIgnoredSubmitDownloader(zaochUrl, 'zaoch', 100, 2, 4)).run()
+            (new UntilIgnoredSubmitDownloader(studUrl, 'stud', 100, 2, 4)).run()
             Downloads.setLastDownloadTime("UntilIgnored", now)
         else if Downloads.lastDownloadTime("Last") < now - 0.9*60*1000
             console.log "running Last"
             (new LastSubmitDownloader(lic40url, 'lic40', 20, 1, 1)).run()
             (new LastSubmitDownloader(zaochUrl, 'zaoch', 20, 1, 1)).run()
+            (new LastSubmitDownloader(studUrl, 'stud', 20, 1, 1)).run()
             Downloads.setLastDownloadTime("Last", now)
         else
             console.log "not running anything"
